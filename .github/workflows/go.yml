@@ -17,7 +17,20 @@ jobs:
       matrix:
         go-version: [1.18.x, 1.19.x]
         mongodb-version: ['5.0', '6.0']
-      
+    services:
+      mongo:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: test
+          MONGO_INITDB_ROOT_PASSWORD: secret
+          MONGO_INITDB_DATABASE: test
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+         - 27017:27017
     steps:
     - uses: actions/checkout@v3
 
@@ -42,4 +55,4 @@ jobs:
     - name: Test
       run: go test -v ./...
       env:
-        DATABASE_URL: mongodb://test:secret@127.0.0.1:27017/test
+        DATABASE_URL: mongodb://test:secret@mongo:27017/test
