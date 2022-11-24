@@ -35,7 +35,7 @@ jobs:
         mongodb-db: test
     
     - name: Install dependencies
-      run: go install
+      run: go download
     
     - name: Test
       run: go test -v ./...
