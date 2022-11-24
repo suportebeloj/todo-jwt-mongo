@@ -32,10 +32,14 @@ jobs:
         mongodb-version: ${{ matrix.mongodb-version }}
         mongodb-username: test
         mongodb-password: secret
+        mongodb-port: 27017
         mongodb-db: test
+        
     
     - name: Install dependencies
       run: go mod download
     
     - name: Test
       run: go test -v ./...
+      env:
+        DATABASE_URL: "mongodb://test:secret@localhost:27017/test
