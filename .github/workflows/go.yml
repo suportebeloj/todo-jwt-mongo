@@ -42,4 +42,4 @@ jobs:
     - name: Test
       run: go test -v ./...
       env:
-        DATABASE_URL: "mongodb://test:secret@localhost:27017/test"
+        DATABASE_URL: mongodb://test:secret@localhost:27017/test
