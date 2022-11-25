@@ -44,7 +44,9 @@ jobs:
     - name: Install dependencies
       run: go mod download
     
-    - name: Test
-      run: go test -v ./...
+    - name: Show Env
       env:
         DATABASE_URL: mongodb://test:secret@${{ matrix.db }}:27017/test
+      run: echo $DATABASE_URL
+    
+   
