@@ -29,6 +29,9 @@ jobs:
       uses: supercharge/mongodb-github-action@1.8.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
+        mongodb-username: test
+        mongodb-password: secret
+        mongodb-db: test
     
     - name: Install dependencies
       run: go mod download
