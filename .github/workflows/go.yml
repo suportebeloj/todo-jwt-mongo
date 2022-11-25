@@ -39,7 +39,7 @@ jobs:
     - name: Test
       run: go test -v ./...
       env:
-        DB_NAME: test
+        DB_NAME: admin
         DB_USER: test
         DB_PASS: secret
         DB_URL: mongodb://localhost:27017
