@@ -7,12 +7,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
-	"os"
 	"testing"
 	"time"
 	"todo-jwt-mongo/internal/core/authentication/models"
+	"todo-jwt-mongo/internal/infra/database"
 	"todo-jwt-mongo/internal/ports"
 )
 
@@ -23,18 +22,7 @@ type AuthenticationTestSuit struct {
 }
 
 func (s *AuthenticationTestSuit) SetupTest() {
-	DB_USER := os.Getenv("DB_USER")
-	DB_PASS := os.Getenv("DB_PASS")
-	DB_NAME := os.Getenv("DB_NAME")
-	DB_URL := os.Getenv("DB_URL")
-
-	credential := options.Credential{
-		Username:   DB_USER,
-		Password:   DB_PASS,
-		AuthSource: DB_NAME,
-	}
-
-	databaseTestClient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(DB_URL).SetAuth(credential))
+	databaseTestClient, err := database.NewMongoDBClient(context.TODO())
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -57,7 +45,7 @@ func (s *AuthenticationTestSuit) TestRegisterNewUser_WithValidData_AndNotReceive
 		Password: "testPassword",
 		Email:    fmt.Sprintf("%s@mail.com", id.Hex()),
 	}
-	pwdHash, salt, err := hashPassword(registerData)
+	pwdHash, salt, err := HashPassword(registerData)
 
 	profile := models.Profile{
 		Email: registerData.Email,
@@ -83,7 +71,7 @@ func (s *AuthenticationTestSuit) TestGivenAValidUser_WhenICallGetByUsername_AndN
 		Email:    fmt.Sprintf("%s@mail.com", id.Hex()),
 	}
 
-	pwdHash, salt, err := hashPassword(registerData)
+	pwdHash, salt, err := HashPassword(registerData)
 	if err != nil {
 		panic(err)
 	}
