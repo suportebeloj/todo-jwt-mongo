@@ -39,5 +39,8 @@ jobs:
     - name: Test
       run: go test -v ./...
       env:
-        DATABASE_URL: mongodb://test:secret@localhost:27017/test?tls=false&authSource=test
+        DB_NAME: test
+        DB_USER: test
+        DB_PASS: secret
+        DB_URL: mongodb://localhost:27017
    
