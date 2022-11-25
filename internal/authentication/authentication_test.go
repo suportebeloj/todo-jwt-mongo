@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"log"
 	"os"
 	"testing"
 	"time"
@@ -22,11 +23,22 @@ type AuthenticationTestSuit struct {
 }
 
 func (s *AuthenticationTestSuit) SetupTest() {
-	databaseTestUrl := os.Getenv("DATABASE_URL")
-	databaseTestClient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(databaseTestUrl))
-	if err != nil {
-		panic(err)
+	DB_USER := os.Getenv("DB_USER")
+	DB_PASS := os.Getenv("DB_PASS")
+	DB_NAME := os.Getenv("DB_NAME")
+	DB_URL := os.Getenv("DB_URL")
+
+	credential := options.Credential{
+		Username:   DB_USER,
+		Password:   DB_PASS,
+		AuthSource: DB_NAME,
 	}
+
+	databaseTestClient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(DB_URL).SetAuth(credential))
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	coll := databaseTestClient.Database("test").Collection("users")
 	s.Collection = coll
 
