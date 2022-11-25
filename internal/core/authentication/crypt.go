@@ -7,7 +7,7 @@ import (
 	"todo-jwt-mongo/internal/core/authentication/models"
 )
 
-func hashPassword(user models.RegisterUser) (hashedPass string, salt int, err error) {
+func HashPassword(user models.RegisterUser) (hashedPass string, salt int, err error) {
 	salt = rand.Int()
 	plainStr := fmt.Sprintf("%s.%s.%d.%s", user.Username, user.Email, salt, user.Password)
 	bytes, err := bcrypt.GenerateFromPassword([]byte(plainStr), 14)
@@ -18,7 +18,7 @@ func hashPassword(user models.RegisterUser) (hashedPass string, salt int, err er
 	return string(bytes), salt, err
 }
 
-func validatePassword(plainPassword string, user *models.User) bool {
+func ValidatePassword(plainPassword string, user *models.User) bool {
 	plainStr := fmt.Sprintf("%s.%s.%d.%s", user.Username, user.Profile.Email, user.Salt, plainPassword)
 	err := bcrypt.CompareHashAndPassword([]byte(user.HashedPassword), []byte(plainStr))
 	return err == nil
