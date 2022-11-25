@@ -33,12 +33,8 @@ jobs:
     - name: Install dependencies
       run: go mod download
     
-    - name: Show Env
-      env:
-        DATABASE_URL: mongodb://test:secret@${{ matrix.db }}:27017/test
-      run: echo $DATABASE_URL
     - name: Test
       run: go test -v ./...
       env:
-        DATABASE_URL: mongodb://test:secret@${{ matrix.db }}:27017/test
+        DATABASE_URL: mongodb://test:secret@$127.0.0.1:27017/test
    
