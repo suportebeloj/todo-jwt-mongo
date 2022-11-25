@@ -12,7 +12,7 @@ import (
 	"os"
 	"testing"
 	"time"
-	"todo-jwt-mongo/internal/authentication/models"
+	"todo-jwt-mongo/internal/core/authentication/models"
 	"todo-jwt-mongo/internal/ports"
 )
 

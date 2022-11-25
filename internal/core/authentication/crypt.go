@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"math/rand"
-	"todo-jwt-mongo/internal/authentication/models"
+	"todo-jwt-mongo/internal/core/authentication/models"
 )
 
 func hashPassword(user models.RegisterUser) (hashedPass string, salt int, err error) {

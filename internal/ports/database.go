@@ -3,7 +3,7 @@ package ports
 import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"todo-jwt-mongo/internal/authentication/models"
+	"todo-jwt-mongo/internal/core/authentication/models"
 )
 
 type UserDatabasePort interface {
