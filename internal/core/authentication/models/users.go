@@ -5,6 +5,11 @@ import (
 	"time"
 )
 
+type Permissions struct {
+	Level int8   `json:"level" bson:"level"`
+	Group string `json:"group" bson:"group"`
+}
+
 type Profile struct {
 	FirstName string `json:"first_name" bson:"first_name"`
 	LastName  string `json:"last_name" bson:"last_name"`
@@ -18,6 +23,7 @@ type User struct {
 	HashedPassword string             `json:"hashed_password" bson:"hashed_password"`
 	Salt           int                `json:"salt" bson:"salt"`
 	Profile        Profile            `json:"profile" bson:"profile"`
+	Permission     Permissions        `json:"permission" bson:"permission"`
 	CreatedAt      time.Time          `json:"created_at" bson:"created_at"`
 	UpdatedAt      time.Time          `json:"updated_at" bson:"updated_at"`
 	DeletedAt      time.Time          `json:"deleted_at" bson:"deleted_at"`
