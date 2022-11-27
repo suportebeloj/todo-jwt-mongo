@@ -11,5 +11,6 @@ func main() {
 	fiberApp.Use(logger.New())
 
 	apiRest := rest.NewAuthenticationAdapter(fiberApp)
+	rest.RegisterSwaggerDoc(fiberApp)
 	apiRest.Run()
 }
