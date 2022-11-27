@@ -1,0 +1,12 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Golang Todo API app",
+    "contact": {
+      "email": "suportebeloj@gmail.com",
+      "name": "Carlos"
+    },
+    "version": "0.0.1"
+  },
+  "paths": {}
+}

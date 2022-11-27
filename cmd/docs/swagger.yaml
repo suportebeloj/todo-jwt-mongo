@@ -1,0 +1,6 @@
+info:
+  version: 0.0.1
+  title: "Golang Todo API app"
+  contact: { }
+paths: { }
+swagger: "2.0"
