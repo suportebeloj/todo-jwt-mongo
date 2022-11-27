@@ -8,5 +8,46 @@
     },
     "version": "0.0.1"
   },
-  "paths": {}
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login route",
+        "description": "Routes used to authentication a existent user.",
+        "parameters": [
+          {
+            "name": "Request body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/FormLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {}
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FormLogin": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "type": "object",
+      "properties": {
+        "username": {
+          "title": "Username",
+          "type": "string"
+        },
+        "password": {
+          "title": "Password",
+          "type": "string"
+        }
+      }
+    }
+  }
 }
