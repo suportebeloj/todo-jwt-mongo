@@ -1,13 +1,26 @@
 package main
 
 import (
+	"context"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"go.mongodb.org/mongo-driver/mongo"
+	"log"
+	"os"
+	"time"
 	"todo-jwt-mongo/internal/api/http/rest"
+	"todo-jwt-mongo/internal/app"
+	"todo-jwt-mongo/internal/core/authentication"
+	"todo-jwt-mongo/internal/infra/database"
 )
 
 func main() {
-	httpServerSetup()
+	db, err := SetupMongoDB()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	httpServerSetup(db)
 }
 
 func SetupMongoDB() (*mongo.Client, error) {
