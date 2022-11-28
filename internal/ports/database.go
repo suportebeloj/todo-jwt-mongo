@@ -6,6 +6,6 @@ import (
 )
 
 type UserDatabasePort interface {
-	Save(ctx context.Context, user models.UserData) (*primitive.ObjectID, error)
+	Save(ctx context.Context, user models.UserData) (*models.User, error)
 	GetByName(ctx context.Context, username string) (*models.User, error)
 }
