@@ -106,3 +106,6 @@ fabric.properties
 
 # hot reload air temporary folder
 tmp/
+
+.env
+.test.env
