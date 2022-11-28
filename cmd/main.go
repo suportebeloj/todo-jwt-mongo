@@ -7,6 +7,10 @@ import (
 )
 
 func main() {
+	httpServerSetup()
+}
+
+func httpServerSetup() {
 	fiberApp := fiber.New()
 	fiberApp.Use(logger.New())
 
