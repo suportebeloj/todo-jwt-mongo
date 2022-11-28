@@ -11,8 +11,8 @@ type AuthenticationAdapter struct {
 	UsersRepository ports.UserDatabasePort
 }
 
-func NewAuthenticationAdapter(app *fiber.App) *AuthenticationAdapter {
-	return &AuthenticationAdapter{App: app}
+func NewAuthenticationAdapter(app *fiber.App, authApp ports.AuthenticationPort) *AuthenticationAdapter {
+	return &AuthenticationAdapter{App: app, AuthApp: authApp}
 }
 
 func (a *AuthenticationAdapter) Run() {
