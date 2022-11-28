@@ -1,8 +1,13 @@
 package rest
 
 import (
+	"context"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"log"
+	"os"
+	"time"
+	"todo-jwt-mongo/internal/core/authentication/models"
 	"todo-jwt-mongo/internal/ports"
 )
 
@@ -25,8 +30,21 @@ func (a *AuthenticationAdapter) Run() {
 }
 
 func (a *AuthenticationAdapter) SignUp(c *fiber.Ctx) error {
-	//TODO implement me
-	panic("implement me")
+	var registerData models.RegisterUser
+	if err := c.BodyParser(&registerData); err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("body parser error, invalid data, check request body and try again.")
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	token, err := a.AuthApp.Register(ctx, registerData)
+	if err != nil {
+		return err
+	}
+
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"token": token,
+	})
 }
 
 func (a *AuthenticationAdapter) SignIn(c *fiber.Ctx) error {
