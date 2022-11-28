@@ -63,6 +63,18 @@ func (s *AuthenticationTestSuite) TestAuthenticationAnExistentUser_WhenICallFunc
 	s.NotEqual("", res)
 }
 
+func (s *AuthenticationTestSuite) TestGiverToken_AfterRegisterUser() {
+	registerData := models.RegisterUser{
+		Username: "testuser",
+		Password: "testpassword",
+		Email:    "test@mail.com",
+	}
+
+	token, err := s.AuthApp.Register(context.TODO(), registerData)
+	s.NoError(err)
+	s.NotEqual("", token)
+}
+
 func TestRunTestSuite(t *testing.T) {
 	suite.Run(t, new(AuthenticationTestSuite))
 }

@@ -7,4 +7,5 @@ import (
 
 type AuthenticationPort interface {
 	Authenticate(ctx context.Context, user models.AuthUser) (string, error)
+	Register(ctx context.Context, user models.RegisterUser) (string, error)
 }
