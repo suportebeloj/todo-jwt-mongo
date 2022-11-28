@@ -48,5 +48,23 @@ func (a *AuthenticationAdapter) SignUp(c *fiber.Ctx) error {
 }
 
 func (a *AuthenticationAdapter) SignIn(c *fiber.Ctx) error {
-	return c.Status(200).Send([]byte("welcome"))
+	var cred models.AuthUser
+	if err := c.BodyParser(&cred); err != nil {
+		if cred.Username == "" || cred.Password == "" {
+			return c.Status(fiber.StatusBadRequest).Send([]byte("username and password are required"))
+		}
+		return err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	token, err := a.AuthApp.Authenticate(ctx, cred)
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).SendString("username or password invalid.")
+	}
+
+	return c.Status(200).JSON(fiber.Map{
+		"token": token,
+	})
 }
