@@ -7,8 +7,8 @@ import (
 )
 
 type AuthenticationAdapter struct {
-	App             *fiber.App
-	UsersRepository ports.UserDatabasePort
+	App     *fiber.App
+	AuthApp ports.AuthenticationPort
 }
 
 func NewAuthenticationAdapter(app *fiber.App, authApp ports.AuthenticationPort) *AuthenticationAdapter {
@@ -18,7 +18,10 @@ func NewAuthenticationAdapter(app *fiber.App, authApp ports.AuthenticationPort) 
 func (a *AuthenticationAdapter) Run() {
 	authGroup := a.App.Group("/auth/")
 	authGroup.Post("/login", a.SignIn)
-	log.Fatalln(a.App.Listen(":3000"))
+	authGroup.Post("/register", a.SignUp)
+
+	port := os.Getenv("PORT")
+	log.Fatalln(a.App.Listen(fmt.Sprintf(":%s", port)))
 }
 
 func (a *AuthenticationAdapter) SignUp(c *fiber.Ctx) error {
