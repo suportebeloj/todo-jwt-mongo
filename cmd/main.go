@@ -26,7 +26,13 @@ func httpServerSetup(db *mongo.Client) {
 	fiberApp := fiber.New()
 	fiberApp.Use(logger.New())
 
-	apiRest := rest.NewAuthenticationAdapter(fiberApp)
+	dbName := os.Getenv("DB_NAME")
+	coll := db.Database(dbName).Collection("users")
+	repo := authentication.NewUsersRepository(coll)
+
+	authApp := app.NewAppAuthentication(repo)
+
+	apiRest := rest.NewAuthenticationAdapter(fiberApp, authApp)
 	rest.RegisterSwaggerDoc(fiberApp)
 	apiRest.Run()
 }
