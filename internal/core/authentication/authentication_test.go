@@ -58,9 +58,9 @@ func (s *AuthenticationTestSuit) TestRegisterNewUser_WithValidData_AndNotReceive
 		CreatedAt:      time.Now(),
 	}
 
-	objId, err := s.Repository.Save(context.TODO(), userData)
+	object, err := s.Repository.Save(context.TODO(), userData)
 	s.NoError(err)
-	s.True(primitive.IsValidObjectID(objId.Hex()))
+	s.True(primitive.IsValidObjectID(object.ID.Hex()))
 }
 
 func (s *AuthenticationTestSuit) TestGivenAValidUser_WhenICallGetByUsername_AndNotHasError() {
